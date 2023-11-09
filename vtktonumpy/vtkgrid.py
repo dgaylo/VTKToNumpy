@@ -30,7 +30,7 @@ class VTKGrid:
         """
         Convert cell bounds to domain length
         """
-        return abs(bounds[-1]-bounds[0])
+        return abs(bounds[-1] - bounds[0])
 
     def __init__(self, grid: vtkRectilinearGrid):
         """
@@ -160,13 +160,22 @@ class VTKGrid:
         # convert to numpy
         comp = array.GetNumberOfComponents()
         if comp == 1:  # scalar
-            return vtk_to_numpy(array). \
-                reshape(self.dims[2], self.dims[1], self.dims[0]).transpose(2,1,0)
+            return (
+                vtk_to_numpy(array)
+                .reshape(self.dims[2], self.dims[1], self.dims[0])
+                .transpose(2, 1, 0)
+            )
         elif comp == 3:  # vector
-            return vtk_to_numpy(array). \
-                reshape(self.dims[2], self.dims[1], self.dims[0], 3).transpose(3,2,1,0)
+            return (
+                vtk_to_numpy(array)
+                .reshape(self.dims[2], self.dims[1], self.dims[0], 3)
+                .transpose(3, 2, 1, 0)
+            )
         elif comp == 9:  # tensor
-            return vtk_to_numpy(array). \
-                reshape(self.dims[2], self.dims[1], self.dims[0], 3, 3).transpose(3,4,2,1,0)
+            return (
+                vtk_to_numpy(array)
+                .reshape(self.dims[2], self.dims[1], self.dims[0], 3, 3)
+                .transpose(3, 4, 2, 1, 0)
+            )
         else:
             raise ValueError("Unsupported number of components in cell array:" + name)

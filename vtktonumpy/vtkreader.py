@@ -24,7 +24,7 @@ class VTKReader:
 
         raise SyntaxError("Unsupported File Type:" + ext)
 
-    def __init__(self, filepath: os.PathLike, extension: str = '', arrays=None):
+    def __init__(self, filepath: os.PathLike, extension: str = "", arrays=None):
         """
         The constructor for VTKReader class
 
@@ -39,8 +39,8 @@ class VTKReader:
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), filepath)
 
         # figure out the extension
-        if extension == '':
-            extension = os.path.splitext(filepath)[1].replace('.', '')
+        if extension == "":
+            extension = os.path.splitext(filepath)[1].replace(".", "")
 
         # Depending on extension, create the reader
         self.vtk_reader = VTKReader.__getVtkReader(extension.lower().strip())
