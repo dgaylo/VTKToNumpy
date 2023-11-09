@@ -1,2 +1,2 @@
 # VTKToNumpy
-A python library to read VTK file and output as multidimensional numpy arrays
+A python library to read XLM VTK files and output multidimensional numpy arrays. Supports cell data on rectilinear grids.
