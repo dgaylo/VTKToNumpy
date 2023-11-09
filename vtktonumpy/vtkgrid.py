@@ -8,31 +8,31 @@ from vtkmodules.util.numpy_support import vtk_to_numpy
 
 
 class VTKGrid:
-    """A wrapper for VTK vtkRectilinearGrid which makes adjustments for cell 
+    """A wrapper for VTK vtkRectilinearGrid which makes adjustments for cell
     data focused workflows and outputs numpy arrays"""
 
     @staticmethod
-    def __boundsToCellCenter(bounds : np.ndarray) -> np.ndarray:
+    def __boundsToCellCenter(bounds: np.ndarray) -> np.ndarray:
         """
         Convert cell bounds to cell center coordinates
         """
         return (bounds[:-1] + bounds[1:]) / 2
 
     @staticmethod
-    def __boundsToCellLengths(bounds : np.ndarray) -> np.ndarray:
+    def __boundsToCellLengths(bounds: np.ndarray) -> np.ndarray:
         """
         Convert cell bounds to cell lengths
         """
         return abs(bounds[:-1] - bounds[1:])
 
     @staticmethod
-    def __boundsToDomainLength(bounds : np.ndarray):
+    def __boundsToDomainLength(bounds: np.ndarray):
         """
         Convert cell bounds to domain length
         """
         return abs(bounds[-1]-bounds[0])
 
-    def __init__(self, grid: vtkRectilinearGrid) :
+    def __init__(self, grid: vtkRectilinearGrid):
         """
         The constructor for VTKGrid class
 
@@ -41,12 +41,12 @@ class VTKGrid:
         """
         self.vtk_grid = grid
 
-        self.dims =  list(self.vtk_grid.GetDimensions())
+        self.dims = list(self.vtk_grid.GetDimensions())
 
         # VTK dimensions are +1 from the number of cells
-        self.dims = [d -1 for d in self.dims]
+        self.dims = [d - 1 for d in self.dims]
 
-    def getDimensions(self,d=None) :
+    def getDimensions(self, d=None):
         """
         Number of cells in each direction
 
@@ -69,6 +69,7 @@ class VTKGrid:
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
+
     def getYCoordinates(self):
         """
         Returns the x coordinates of cell centers
@@ -76,6 +77,7 @@ class VTKGrid:
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
+
     def getZCoordinates(self):
         """
         Returns the x coordinates of cell centers
@@ -92,6 +94,7 @@ class VTKGrid:
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
+
     def getDY(self):
         """
         Returns dy of cells
@@ -99,6 +102,7 @@ class VTKGrid:
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
+
     def getDZ(self):
         """
         Returns dz of cells
@@ -115,6 +119,7 @@ class VTKGrid:
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
+
     def getLY(self):
         """
         Returns length of the domain in Y
@@ -122,6 +127,7 @@ class VTKGrid:
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
+
     def getLZ(self):
         """
         Returns length of the domain in Z
@@ -130,7 +136,7 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
-    def getArray(self,name : str):
+    def getArray(self, name: str):
         """
         Get array data as a numpy array. If no such array exists, return None
 
@@ -145,22 +151,22 @@ class VTKGrid:
             The last three dimensions are [... i,j,k] corresponding to (x,y,z).
         """
 
-        array=self.vtk_grid.GetCellData().GetArray(name)
+        array = self.vtk_grid.GetCellData().GetArray(name)
 
         # check that the array exists
         if array is None:
             return None
 
         # convert to numpy
-        comp=array.GetNumberOfComponents()
-        if comp==1: # scalar
+        comp = array.GetNumberOfComponents()
+        if comp == 1:  # scalar
             return vtk_to_numpy(array). \
                 reshape(self.dims[2], self.dims[1], self.dims[0]).transpose(2,1,0)
-        elif comp==3: # vector
+        elif comp == 3:  # vector
             return vtk_to_numpy(array). \
-                reshape(self.dims[2], self.dims[1], self.dims[0],3).transpose(3,2,1,0)
-        elif comp==9: # tensor
+                reshape(self.dims[2], self.dims[1], self.dims[0], 3).transpose(3,2,1,0)
+        elif comp == 9:  # tensor
             return vtk_to_numpy(array). \
-                reshape(self.dims[2], self.dims[1], self.dims[0],3,3).transpose(3,4,2,1,0)
+                reshape(self.dims[2], self.dims[1], self.dims[0], 3, 3).transpose(3,4,2,1,0)
         else:
             raise ValueError("Unsupported number of components in cell array:" + name)
