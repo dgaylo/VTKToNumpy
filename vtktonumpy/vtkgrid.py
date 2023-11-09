@@ -32,6 +32,13 @@ class VTKGrid:
         """
         return abs(bounds[-1] - bounds[0])
 
+    @staticmethod
+    def __boundsToDomainExtents(bounds: np.ndarray) -> tuple:
+        """
+        Convert cell bounds to domain length
+        """
+        return (bounds[0], bounds[-1])
+
     def __init__(self, grid: vtkRectilinearGrid):
         """
         The constructor for VTKGrid class
@@ -133,6 +140,31 @@ class VTKGrid:
         Returns length of the domain in Z
         """
         return VTKGrid.__boundsToDomainLength(
+            vtk_to_numpy(self.vtk_grid.GetZCoordinates())
+        )
+
+    # For getting domain bounds
+    def getExtentsX(self):
+        """
+        Returns the minimum and maximum extent in X
+        """
+        return VTKGrid.__boundsToDomainExtents(
+            vtk_to_numpy(self.vtk_grid.GetXCoordinates())
+        )
+
+    def getExtentsY(self):
+        """
+        Returns the minimum and maximum extent in Y
+        """
+        return VTKGrid.__boundsToDomainExtents(
+            vtk_to_numpy(self.vtk_grid.GetYCoordinates())
+        )
+
+    def getExtentsZ(self):
+        """
+        Returns the minimum and maximum extent in Z
+        """
+        return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
