@@ -19,7 +19,7 @@ classifiers = [
 
 dependencies = [
   "numpy",
-  "vtk",
+  "vtk>=9.1",
 ]
 
 [project.urls]
