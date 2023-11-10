@@ -197,17 +197,17 @@ class VTKGrid:
                 .reshape(self.dims[2], self.dims[1], self.dims[0])
                 .transpose(2, 1, 0)
             )
-        elif comp == 3:  # vector
+        if comp == 3:  # vector
             return (
                 vtk_to_numpy(array)
                 .reshape(self.dims[2], self.dims[1], self.dims[0], 3)
                 .transpose(3, 2, 1, 0)
             )
-        elif comp == 9:  # tensor
+        if comp == 9:  # tensor
             return (
                 vtk_to_numpy(array)
                 .reshape(self.dims[2], self.dims[1], self.dims[0], 3, 3)
                 .transpose(3, 4, 2, 1, 0)
             )
-        else:
-            raise ValueError("Unsupported number of components in cell array:" + name)
+
+        raise ValueError("Unsupported number of components in cell array:" + name)
