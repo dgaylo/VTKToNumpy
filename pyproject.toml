@@ -7,7 +7,7 @@ name = "vtktonumpy"
 version = "0.0.0"
 description = "Read VTK rectilinear grid files and output as N-dimensional NumPy arrays"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.6"
 license = { file = "LICENSE" }
 authors = [
   { name="Declan B. Gaylo", email="dgaylo@mit.edu" },
