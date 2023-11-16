@@ -78,7 +78,7 @@ class VTKReader:
 
         return False
 
-    def addArray(self, array: Union[str, list[str]]) -> None:
+    def addArray(self, array) -> None:
         """
         Add an array (or arrays) to those that will be read
 
@@ -94,7 +94,7 @@ class VTKReader:
             else:
                 raise ValueError("Cell Array not present:" + a)
 
-    def removeArray(self, array: Union[str, list[str]]) -> None:
+    def removeArray(self, array) -> None:
         """
         Remove an array (or arrays) from those that will be read.
         If the array is not present in the VTK data, do nothing
@@ -109,7 +109,7 @@ class VTKReader:
             if self.contains(a):
                 self.vtk_reader.SetCellArrayStatus(a, False)
 
-    def getArrayList(self) -> list[str]:
+    def getArrayList(self):
         """
         Returns a list of arrays present in the VTK data
 
@@ -125,7 +125,7 @@ class VTKReader:
 
         return out
 
-    def getArrayStatus(self) -> list[bool]:
+    def getArrayStatus(self):
         """
         Returns read status of arrays present in the VTK data
 
