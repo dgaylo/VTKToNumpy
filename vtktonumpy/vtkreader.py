@@ -59,6 +59,8 @@ class VTKReader:
             name = self.vtk_reader.GetCellArrayName(i)
             if arrays is not None:
                 self.vtk_reader.SetCellArrayStatus(name, (name in arrays))
+            else:
+                self.vtk_reader.SetCellArrayStatus(name, False)
 
     def contains(self, array: str) -> bool:
         """
