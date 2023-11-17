@@ -78,3 +78,9 @@ def test_getArrayVector(myVtkRectGrid_V,myVectorData):
     v=VTKGrid(myVtkRectGrid_V).getArray("V")
     assert v.shape == myVectorData.shape
     assert all(v == myVectorData)
+
+# test reading tensor data
+def test_getArrayTensor(myVtkRectGrid_T,myTensorData):
+    t=VTKGrid(myVtkRectGrid_T).getArray("T")
+    assert t.shape == myTensorData.shape
+    assert all(t == myTensorData)

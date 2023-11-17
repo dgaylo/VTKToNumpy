@@ -22,6 +22,12 @@ def addVectorData(rgrid: vtkRectilinearGrid, data: ndarray, name: str) -> vtkRec
     array.SetName(name)
     return rgrid.GetCellData().AddArray(array)
 
+def addTensorData(rgrid: vtkRectilinearGrid, data: ndarray, name: str) -> vtkRectilinearGrid:
+    s=data.shape
+    array=numpy_to_vtk(data.transpose(4, 3, 2, 0, 1).reshape(s[2]*s[3]*s[4],s[0]*s[1]),deep=True)
+    array.SetName(name)
+    return rgrid.GetCellData().AddArray(array)
+
 @dataclass
 class GridClass:
     """
@@ -212,6 +218,10 @@ def myScalarData(myGrid) -> ndarray:
 def myVectorData(myGrid) -> ndarray:
     return (random.rand(3,myGrid.nx(),myGrid.ny(),myGrid.nz()) - 0.5)*10
 
+@pytest.fixture(scope="session")
+def myTensorData(myGrid) -> ndarray:
+    return (random.rand(3,3,myGrid.nx(),myGrid.ny(),myGrid.nz()) - 0.5)*10
+
 @pytest.fixture
 def myVtkRectGrid_S(myVtkRectGrid, myScalarData) -> vtkRectilinearGrid:
     addScalarData(myVtkRectGrid,myScalarData,"S")
@@ -220,4 +230,9 @@ def myVtkRectGrid_S(myVtkRectGrid, myScalarData) -> vtkRectilinearGrid:
 @pytest.fixture
 def myVtkRectGrid_V(myVtkRectGrid, myVectorData) -> vtkRectilinearGrid:
     addVectorData(myVtkRectGrid,myVectorData,"V")
+    return myVtkRectGrid
+
+@pytest.fixture
+def myVtkRectGrid_T(myVtkRectGrid, myTensorData) -> vtkRectilinearGrid:
+    addTensorData(myVtkRectGrid,myTensorData,"T")
     return myVtkRectGrid
