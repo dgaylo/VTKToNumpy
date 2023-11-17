@@ -1,10 +1,11 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "setuptools_scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
+dynamic = ["version"]
+
 name = "vtktonumpy"
-version = "0.0.0"
 description = "Read VTK rectilinear grid files and output as N-dimensional NumPy arrays"
 readme = "README.md"
 requires-python = ">=3.6"
@@ -25,3 +26,5 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/dgaylo/VTKToNumpy"
 "Bug Tracker" = "https://github.com/dgaylo/VTKToNumpy/issues"
+
+[tool.setuptools_scm]
