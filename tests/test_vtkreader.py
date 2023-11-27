@@ -5,7 +5,7 @@ from numpy import all
 from vtk import vtkXMLRectilinearGridWriter
 from conftest import addVectorData,addScalarData
 
-from vtktonumpy.vtkreader import VTKReader
+from vtktonumpy import VTKReader
 
 SCALAR_NAME="S"
 VECTOR_NAME="V"

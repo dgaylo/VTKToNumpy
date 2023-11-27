@@ -1,7 +1,7 @@
 import pytest
 
 
-from vtktonumpy.vtkgrid import VTKGrid
+from vtktonumpy import VTKGrid
 from numpy import all
 
 @pytest.fixture
