@@ -67,6 +67,10 @@ def test_getExtentsZ(myVTKGrid, myGrid):
 def test_getArrayNone(myVTKGrid):
     assert myVTKGrid.getArray(None) is None
 
+# test getting list of arrays
+def test_getArrayList(myVtkRectGrid_V):
+    assert VTKGrid(myVtkRectGrid_V).getArrayList() == ["V"]
+
 # test reading scalar data
 def test_getArrayScalar(myVtkRectGrid_S,myScalarData):
     s=VTKGrid(myVtkRectGrid_S).getArray("S")

@@ -168,6 +168,24 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
+    # For data arrays
+    def getArrayList(self):
+        """
+        Returns a list of arrays present in the VTK data
+
+        Parameters:
+            none
+
+        Returns:
+            out : a list of available cell arrays
+        """
+        out = []
+        cell_data=self.vtk_grid.GetCellData()
+        for i in range(cell_data.GetNumberOfArrays()):
+            out.append(cell_data.GetArrayName(i))
+
+        return out
+
     def getArray(self, name: str):
         """
         Get array data as a numpy array. If no such array exists, return None
