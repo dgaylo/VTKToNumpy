@@ -13,8 +13,14 @@ def myVTKGrid(myVtkRectGrid) -> VTKGrid:
 
 def test_getDimensions(myVTKGrid, myGrid):
     assert myVTKGrid.getDimensions(0) == myGrid.nx()
+    assert myVTKGrid.getNX() == myGrid.nx()
+
     assert myVTKGrid.getDimensions(1) == myGrid.ny()
+    assert myVTKGrid.getNY() == myGrid.ny()
+
     assert myVTKGrid.getDimensions(2) == myGrid.nz()
+    assert myVTKGrid.getNZ() == myGrid.nz()
+
     assert myVTKGrid.getDimensions() == [myGrid.nx(),myGrid.ny(),myGrid.nz()]
 
 # For getting coordinates

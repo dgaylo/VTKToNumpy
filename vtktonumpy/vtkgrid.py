@@ -68,6 +68,24 @@ class VTKGrid:
         else:
             return self.dims[d]
 
+    def getNX(self):
+        """
+        Number of cells in x direction (NX)
+        """
+        return self.dims[0]
+
+    def getNY(self):
+        """
+        Number of cells in y direction (NY)
+        """
+        return self.dims[1]
+
+    def getNZ(self):
+        """
+        Number of cells in z direction (NZ)
+        """
+        return self.dims[2]
+
     # For getting coordinates
     def getXCoordinates(self):
         """
