@@ -11,7 +11,7 @@ readme = "README.md"
 requires-python = ">=3.6"
 license = { file = "LICENSE" }
 authors = [
-  { name="Declan B. Gaylo", email="dgaylo@mit.edu" },
+  { name="Declan B. Gaylo" },
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
