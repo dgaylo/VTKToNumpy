@@ -44,6 +44,7 @@ class VTKReader:
 
         # Depending on extension, create the reader
         self.vtk_reader = VTKReader.__getVtkReader(extension.lower().strip())
+        """Underlying VTK reader"""
 
         # Assign the file
         self.vtk_reader.SetFileName(filepath)

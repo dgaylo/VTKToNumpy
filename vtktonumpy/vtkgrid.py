@@ -44,14 +44,16 @@ class VTKGrid:
         The constructor for VTKGrid class
 
         Parameters:
-            grid (vtk.vtkRectilinearGrid): the grid. Probably from VTKReader.getOutput()
+            grid (vtk.vtkRectilinearGrid): the grid. Probably from [VTKReader.getOutput()](vtkreader.html#VTKReader.getOutput)
         """
         self.vtk_grid = grid
-
+        """Underlying VTK rectilinear grid"""
+        
         self.dims = list(self.vtk_grid.GetDimensions())
 
         # VTK dimensions are +1 from the number of cells
         self.dims = [d - 1 for d in self.dims]
+        """$[N_x,N_y,N_z]$"""
 
     def getDimensions(self, d=None):
         """
@@ -71,7 +73,7 @@ class VTKGrid:
     # For getting coordinates
     def getXCoordinates(self):
         """
-        Returns the x coordinates of cell centers
+        Returns the $x$-coordinates of cell centers
         """
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
@@ -79,7 +81,7 @@ class VTKGrid:
 
     def getYCoordinates(self):
         """
-        Returns the x coordinates of cell centers
+        Returns the $y$-coordinates of cell centers
         """
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
@@ -87,7 +89,7 @@ class VTKGrid:
 
     def getZCoordinates(self):
         """
-        Returns the x coordinates of cell centers
+        Returns the $z$-coordinates of cell centers
         """
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
@@ -96,7 +98,7 @@ class VTKGrid:
     # For getting cell lengths
     def getDX(self):
         """
-        Returns dx of cells
+        Returns $\Delta x$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
@@ -104,7 +106,7 @@ class VTKGrid:
 
     def getDY(self):
         """
-        Returns dy of cells
+        Returns $\Delta y$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
@@ -112,7 +114,7 @@ class VTKGrid:
 
     def getDZ(self):
         """
-        Returns dz of cells
+        Returns $\Delta z$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
@@ -121,7 +123,7 @@ class VTKGrid:
     # For getting domain lengths
     def getLX(self):
         """
-        Returns length of the domain in X
+        Returns $L_x$, the length of the domain in $x$
         """
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
@@ -129,7 +131,7 @@ class VTKGrid:
 
     def getLY(self):
         """
-        Returns length of the domain in Y
+        Returns $L_y$, the length of the domain in $y$
         """
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
@@ -137,7 +139,7 @@ class VTKGrid:
 
     def getLZ(self):
         """
-        Returns length of the domain in Z
+        Returns $L_z$, the length of the domain in $z$
         """
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
@@ -146,7 +148,7 @@ class VTKGrid:
     # For getting domain bounds
     def getExtentsX(self):
         """
-        Returns the minimum and maximum extent in X
+        Returns the minimum and maximum extent in $x$
         """
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
@@ -154,7 +156,7 @@ class VTKGrid:
 
     def getExtentsY(self):
         """
-        Returns the minimum and maximum extent in Y
+        Returns the minimum and maximum extent in $y$
         """
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
@@ -162,7 +164,7 @@ class VTKGrid:
 
     def getExtentsZ(self):
         """
-        Returns the minimum and maximum extent in Z
+        Returns the minimum and maximum extent in $z$
         """
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
