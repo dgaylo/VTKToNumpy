@@ -73,21 +73,21 @@ class VTKGrid:
         else:
             return self.dims[d]
 
-    def getNX(self):
+    def getNX(self) -> int:
         """
-        Number of cells in x direction (NX)
+        $N_x$, the number of cells in $x$ direction
         """
         return self.dims[0]
 
-    def getNY(self):
+    def getNY(self) -> int:
         """
-        Number of cells in y direction (NY)
+        $N_y$, the number of cells in $y$ direction
         """
         return self.dims[1]
 
-    def getNZ(self):
+    def getNZ(self) -> int:
         """
-        Number of cells in z direction (NZ)
+        $N_z$, the number of cells in $z$ direction
         """
         return self.dims[2]
 
@@ -194,13 +194,7 @@ class VTKGrid:
     # For data arrays
     def getArrayList(self):
         """
-        Returns a list of arrays present in the VTK data
-
-        Parameters:
-            none
-
-        Returns:
-            out : a list of available cell arrays
+        list[str]: A list of cell arrays present in the VTK data
         """
         out = []
         cell_data=self.vtk_grid.GetCellData()

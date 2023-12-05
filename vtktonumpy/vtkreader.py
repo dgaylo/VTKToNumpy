@@ -119,13 +119,7 @@ class VTKReader:
 
     def getArrayList(self):
         """
-        Returns a list of arrays present in the VTK data
-
-        Parameters:
-            none
-
-        Returns:
-            list[str]: a list of available cell arrays
+        list[str]: A list of cell arrays present in the VTK data
         """
         out = []
         for i in range(self.vtk_reader.GetNumberOfCellArrays()):
