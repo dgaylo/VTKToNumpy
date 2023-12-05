@@ -1,3 +1,6 @@
+# documentation generation folder
+docs/*
+
 # vscode 
 .vscode/*
 
