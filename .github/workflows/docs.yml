@@ -4,12 +4,8 @@ name: website
 
 # build the documentation whenever there are new commits on main
 on:
-  push:
-    branches:
-      - main
-    # Alternative: only build for tags.
-    # tags:
-    #   - '*'
+  release:
+    types: [published]
 
 # security: restrict permissions for CI jobs.
 permissions:
@@ -28,7 +24,7 @@ jobs:
       # Install all dependencies (including pdoc)
       - run: pip install -r requirements.txt
       # Build documentation into docs/.
-      - run: pdoc -o docs/ --docformat google --math vtktonumpy
+      - run: pdoc -o docs/ --docformat google --math --footer-text $(python -m setuptools_scm) vtktonumpy 
 
       - uses: actions/upload-pages-artifact@v2
         with:
