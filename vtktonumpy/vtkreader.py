@@ -30,7 +30,7 @@ class VTKReader:
 
         Parameters:
             filepath (os.PathLike): the VTK file to read
-            extension (str, optional) : 
+            extension (str, optional) :
                 If not provided, will guess based on :obj:`filepath`. Options are:
 
                 `"vtr"` for a VTK XML Rectilinear Grid

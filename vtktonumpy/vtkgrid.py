@@ -44,11 +44,12 @@ class VTKGrid:
         The constructor for VTKGrid class
 
         Args:
-            grid (vtk.vtkRectilinearGrid): The underlying VTK rectilinear grid, such as from [VTKReader.getOutput()](vtkreader.html#VTKReader.getOutput).
+            grid (vtk.vtkRectilinearGrid): The underlying VTK rectilinear grid,
+                such as from [VTKReader.getOutput()](vtkreader.html#VTKReader.getOutput).
         """
         self.vtk_grid = grid
         """Underlying VTK rectilinear grid"""
-        
+
         self.dims = list(self.vtk_grid.GetDimensions())
 
         # VTK dimensions are +1 from the number of cells
@@ -99,7 +100,7 @@ class VTKGrid:
 
     # For getting cell lengths
     def getDX(self) -> np.ndarray:
-        """
+        r"""
         The $\Delta x$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
@@ -107,7 +108,7 @@ class VTKGrid:
         )
 
     def getDY(self) -> np.ndarray:
-        """
+        r"""
         The $\Delta y$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
@@ -115,7 +116,7 @@ class VTKGrid:
         )
 
     def getDZ(self) -> np.ndarray:
-        """
+        r"""
         The $\Delta z$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
@@ -149,7 +150,7 @@ class VTKGrid:
 
     # For getting domain bounds
     def getExtentsX(self) -> tuple:
-        """
+        r"""
         $(x_{\mathrm{start}},x_{\mathrm{end}})$, the extents in $x$.
         """
         return VTKGrid.__boundsToDomainExtents(
@@ -157,7 +158,7 @@ class VTKGrid:
         )
 
     def getExtentsY(self) -> tuple:
-        """
+        r"""
         $(y_{\mathrm{start}},y_{\mathrm{end}})$, the extents in $y$.
         """
         return VTKGrid.__boundsToDomainExtents(
@@ -165,7 +166,7 @@ class VTKGrid:
         )
 
     def getExtentsZ(self) -> tuple:
-        """
+        r"""
         $(z_{\mathrm{start}},z_{\mathrm{end}})$, the extents in $z$.
         """
         return VTKGrid.__boundsToDomainExtents(
@@ -173,7 +174,7 @@ class VTKGrid:
         )
 
     def getArray(self, name: str) -> np.ndarray:
-        """
+        r"""
         Get VTK array as a numpy array. If no such array exists, return :obj:`None`
 
         Parameters:
