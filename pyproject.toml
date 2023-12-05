@@ -26,5 +26,6 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/dgaylo/VTKToNumpy"
 "Bug Tracker" = "https://github.com/dgaylo/VTKToNumpy/issues"
+"Documentation" = "https://dgaylo.github.io/VTKToNumpy"
 
 [tool.setuptools_scm]
