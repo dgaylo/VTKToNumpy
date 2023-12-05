@@ -26,7 +26,7 @@ class VTKGrid:
         return abs(bounds[:-1] - bounds[1:])
 
     @staticmethod
-    def __boundsToDomainLength(bounds: np.ndarray):
+    def __boundsToDomainLength(bounds: np.ndarray) -> float:
         """
         Convert cell bounds to domain length
         """
@@ -43,25 +43,30 @@ class VTKGrid:
         """
         The constructor for VTKGrid class
 
-        Parameters:
-            grid (vtk.vtkRectilinearGrid): the grid. Probably from VTKReader.getOutput()
+        Args:
+            grid (vtk.vtkRectilinearGrid): The underlying VTK rectilinear grid,
+                such as from [VTKReader.getOutput()](vtkreader.html#VTKReader.getOutput).
         """
         self.vtk_grid = grid
+        """Underlying VTK rectilinear grid"""
 
         self.dims = list(self.vtk_grid.GetDimensions())
 
         # VTK dimensions are +1 from the number of cells
         self.dims = [d - 1 for d in self.dims]
+        """$[N_x,N_y,N_z]$"""
 
     def getDimensions(self, d=None):
         """
-        Number of cells in each direction
+        Get number of cells in each direction.
 
         Parameters:
-            d (int): the direction
+            d (:obj:`int`, optional): the direction
 
         Returns:
-            int: The dimensions of the cell data, [Nx, Ny, Nz]. If d is provided, return Nd
+            int[3]: The dimensions of the cell data, $[N_x, N_y, N_z]$.
+
+            int: If :obj:`d` is set, returns $[N_d]$.
         """
         if d is None:
             return self.dims
@@ -69,118 +74,122 @@ class VTKGrid:
             return self.dims[d]
 
     # For getting coordinates
-    def getXCoordinates(self):
+    def getXCoordinates(self) -> np.ndarray:
         """
-        Returns the x coordinates of cell centers
+        The $x$-coordinates of cell centers
         """
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
 
-    def getYCoordinates(self):
+    def getYCoordinates(self) -> np.ndarray:
         """
-        Returns the x coordinates of cell centers
+        The $y$-coordinates of cell centers
         """
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
 
-    def getZCoordinates(self):
+    def getZCoordinates(self) -> np.ndarray:
         """
-        Returns the x coordinates of cell centers
+        The $z$-coordinates of cell centers
         """
         return VTKGrid.__boundsToCellCenter(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
     # For getting cell lengths
-    def getDX(self):
-        """
-        Returns dx of cells
+    def getDX(self) -> np.ndarray:
+        r"""
+        The $\Delta x$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
 
-    def getDY(self):
-        """
-        Returns dy of cells
+    def getDY(self) -> np.ndarray:
+        r"""
+        The $\Delta y$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
 
-    def getDZ(self):
-        """
-        Returns dz of cells
+    def getDZ(self) -> np.ndarray:
+        r"""
+        The $\Delta z$ of cells
         """
         return VTKGrid.__boundsToCellLengths(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
     # For getting domain lengths
-    def getLX(self):
+    def getLX(self) -> float:
         """
-        Returns length of the domain in X
+        $L_x$, the length of the domain in $x$
         """
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
 
-    def getLY(self):
+    def getLY(self) -> float:
         """
-        Returns length of the domain in Y
+        $L_y$, the length of the domain in $y$
         """
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
 
-    def getLZ(self):
+    def getLZ(self) -> float:
         """
-        Returns length of the domain in Z
+        $L_z$, the length of the domain in $z$
         """
         return VTKGrid.__boundsToDomainLength(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
     # For getting domain bounds
-    def getExtentsX(self):
-        """
-        Returns the minimum and maximum extent in X
+    def getExtentsX(self) -> tuple:
+        r"""
+        $(x_{\mathrm{start}},x_{\mathrm{end}})$, the extents in $x$.
         """
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
 
-    def getExtentsY(self):
-        """
-        Returns the minimum and maximum extent in Y
+    def getExtentsY(self) -> tuple:
+        r"""
+        $(y_{\mathrm{start}},y_{\mathrm{end}})$, the extents in $y$.
         """
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
 
-    def getExtentsZ(self):
-        """
-        Returns the minimum and maximum extent in Z
+    def getExtentsZ(self) -> tuple:
+        r"""
+        $(z_{\mathrm{start}},z_{\mathrm{end}})$, the extents in $z$.
         """
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
-    def getArray(self, name: str):
-        """
-        Get array data as a numpy array. If no such array exists, return None
+    def getArray(self, name: str) -> np.ndarray:
+        r"""
+        Get VTK array as a numpy array. If no such array exists, return :obj:`None`
 
         Parameters:
-            name (str): the name of the data array
+            name (str): the name of the array
 
         Returns:
-            A numpy array in order with number of dimensions depending on data type.
-                Scalar: 3
-                Vector: 4
-                Tensor: 5
-            The last three dimensions are [... i,j,k] corresponding to (x,y,z).
+            A numpy array, with the number of array dimensions depending on data type:
+
+                Scalar: ndim=3
+
+                Vector: ndim=4
+
+                Tensor: ndim=5
+
+            The last three dimensions are $[\dots,i,j,k]$ corresponding to $(x,y,z)$.
         """
 
         array = self.vtk_grid.GetCellData().GetArray(name)
