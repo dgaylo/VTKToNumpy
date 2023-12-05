@@ -197,7 +197,7 @@ class VTKGrid:
         list[str]: A list of cell arrays present in the VTK data
         """
         out = []
-        cell_data=self.vtk_grid.GetCellData()
+        cell_data = self.vtk_grid.GetCellData()
         for i in range(cell_data.GetNumberOfArrays()):
             out.append(cell_data.GetArrayName(i))
 
