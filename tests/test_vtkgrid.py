@@ -13,8 +13,14 @@ def myVTKGrid(myVtkRectGrid) -> VTKGrid:
 
 def test_getDimensions(myVTKGrid, myGrid):
     assert myVTKGrid.getDimensions(0) == myGrid.nx()
+    assert myVTKGrid.getNX() == myGrid.nx()
+
     assert myVTKGrid.getDimensions(1) == myGrid.ny()
+    assert myVTKGrid.getNY() == myGrid.ny()
+
     assert myVTKGrid.getDimensions(2) == myGrid.nz()
+    assert myVTKGrid.getNZ() == myGrid.nz()
+
     assert myVTKGrid.getDimensions() == [myGrid.nx(),myGrid.ny(),myGrid.nz()]
 
 # For getting coordinates
@@ -66,6 +72,10 @@ def test_getExtentsZ(myVTKGrid, myGrid):
 # test reading no array
 def test_getArrayNone(myVTKGrid):
     assert myVTKGrid.getArray(None) is None
+
+# test getting list of arrays
+def test_getArrayList(myVtkRectGrid_V):
+    assert VTKGrid(myVtkRectGrid_V).getArrayList() == ["V"]
 
 # test reading scalar data
 def test_getArrayScalar(myVtkRectGrid_S,myScalarData):

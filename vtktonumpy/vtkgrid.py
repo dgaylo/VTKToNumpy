@@ -73,6 +73,24 @@ class VTKGrid:
         else:
             return self.dims[d]
 
+    def getNX(self) -> int:
+        """
+        $N_x$, the number of cells in $x$ direction
+        """
+        return self.dims[0]
+
+    def getNY(self) -> int:
+        """
+        $N_y$, the number of cells in $y$ direction
+        """
+        return self.dims[1]
+
+    def getNZ(self) -> int:
+        """
+        $N_z$, the number of cells in $z$ direction
+        """
+        return self.dims[2]
+
     # For getting coordinates
     def getXCoordinates(self) -> np.ndarray:
         """
@@ -172,6 +190,18 @@ class VTKGrid:
         return VTKGrid.__boundsToDomainExtents(
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
+
+    # For data arrays
+    def getArrayList(self):
+        """
+        list[str]: A list of cell arrays present in the VTK data
+        """
+        out = []
+        cell_data = self.vtk_grid.GetCellData()
+        for i in range(cell_data.GetNumberOfArrays()):
+            out.append(cell_data.GetArrayName(i))
+
+        return out
 
     def getArray(self, name: str) -> np.ndarray:
         r"""
