@@ -73,7 +73,7 @@ class VTKGrid:
             return self.dims[d]
 
     # For getting coordinates
-    def getXCoordinates(self) -> np.ndarray[float]:
+    def getXCoordinates(self) -> np.ndarray:
         """
         The $x$-coordinates of cell centers
         """
@@ -81,7 +81,7 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
 
-    def getYCoordinates(self) -> np.ndarray[float]:
+    def getYCoordinates(self) -> np.ndarray:
         """
         The $y$-coordinates of cell centers
         """
@@ -89,7 +89,7 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
 
-    def getZCoordinates(self) -> np.ndarray[float]:
+    def getZCoordinates(self) -> np.ndarray:
         """
         The $z$-coordinates of cell centers
         """
@@ -98,7 +98,7 @@ class VTKGrid:
         )
 
     # For getting cell lengths
-    def getDX(self) -> np.ndarray[float]:
+    def getDX(self) -> np.ndarray:
         """
         The $\Delta x$ of cells
         """
@@ -106,7 +106,7 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetXCoordinates())
         )
 
-    def getDY(self) -> np.ndarray[float]:
+    def getDY(self) -> np.ndarray:
         """
         The $\Delta y$ of cells
         """
@@ -114,7 +114,7 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetYCoordinates())
         )
 
-    def getDZ(self) -> np.ndarray[float]:
+    def getDZ(self) -> np.ndarray:
         """
         The $\Delta z$ of cells
         """
@@ -172,7 +172,7 @@ class VTKGrid:
             vtk_to_numpy(self.vtk_grid.GetZCoordinates())
         )
 
-    def getArray(self, name: str) -> np.ndarray[float]:
+    def getArray(self, name: str) -> np.ndarray:
         """
         Get VTK array as a numpy array. If no such array exists, return :obj:`None`
 
